@@ -1,4 +1,4 @@
-package com.zhong.service.controller;
+package com.zhong.controller;
 
 import com.zhong.service.CustomerService;
 import jakarta.annotation.Resource;

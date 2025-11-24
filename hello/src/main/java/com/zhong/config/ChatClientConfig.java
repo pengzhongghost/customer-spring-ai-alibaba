@@ -1,4 +1,4 @@
-package com.zhong.service.config;
+package com.zhong.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.context.annotation.Bean;

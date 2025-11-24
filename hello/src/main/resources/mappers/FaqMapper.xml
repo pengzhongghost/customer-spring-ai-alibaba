@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhong.mapper.FaqMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zhong.pojo.Faq">
+        <id column="id" property="id" />
+        <result column="category_id" property="categoryId" />
+        <result column="question" property="question" />
+        <result column="answer" property="answer" />
+        <result column="status" property="status" />
+        <result column="use_count" property="useCount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, category_id, question, answer, status, use_count
+    </sql>
+
+</mapper>
