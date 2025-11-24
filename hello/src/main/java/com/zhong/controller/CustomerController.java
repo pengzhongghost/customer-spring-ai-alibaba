@@ -15,8 +15,9 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/generateResponse")
-    public  String generateResponse(@RequestParam("message") String message) {
-        return customerService.generateResponse(message);
+    public  String generateResponse(@RequestParam("message") String message,
+                                    @RequestParam("userId") Long userId) {
+        return customerService.generateResponse(message, userId);
     }
 
 }

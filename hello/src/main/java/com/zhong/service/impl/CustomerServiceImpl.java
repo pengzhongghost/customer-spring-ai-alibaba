@@ -21,6 +21,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
+import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
+
 @Service
 @Slf4j
 public class CustomerServiceImpl implements CustomerService {
@@ -37,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
     private SensitiveWordBs sensitiveWordBs;
 
     @Override
-    public String generateResponse(String userMessage) {
+    public String generateResponse(String userMessage, Long userId) {
         if (StringUtils.isEmpty(userMessage)) {
             return "输入的内容不能为空";
         }
@@ -55,7 +58,16 @@ public class CustomerServiceImpl implements CustomerService {
         String resolvedPrompt = promptTemplate.render(
                 Map.of("current_date", LocalDate.now().toString())
         );
-        ChatClient.CallResponseSpec response = chatClient.prompt().system(resolvedPrompt).user(userMessage)
+        ChatClient.CallResponseSpec response = chatClient.prompt()
+                .system(resolvedPrompt)
+                .user(userMessage)
+                //记忆管理
+                .advisors(advisorSpec -> {
+                    //对话记忆用户id
+                    advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, userId.toString());
+                    //对话记忆每次保留多少条数
+                    advisorSpec.param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 3);
+                })
                 .call();
         return response.content();
     }
