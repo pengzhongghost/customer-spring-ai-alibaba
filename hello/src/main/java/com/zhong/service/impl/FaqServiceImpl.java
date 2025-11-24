@@ -6,19 +6,25 @@ import com.zhong.pojo.Faq;
 import com.zhong.service.IFaqService;
 import jakarta.annotation.Resource;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class FaqServiceImpl extends ServiceImpl<FaqMapper, Faq> implements IFaqService {
 
     @Resource
     private VectorStore vectorStore;
+
+    @Value("${spring.ai.vectorstore.qdrant.similarity-threshold}")
+    private double similarityThreshold;
 
     @Override
     public void syncFaqToQdrant() {
@@ -41,5 +47,20 @@ public class FaqServiceImpl extends ServiceImpl<FaqMapper, Faq> implements IFaqS
         vectorStore.add(documents);
     }
 
+    @Override
+    public List<Faq> similaritySearch(String message) {
+        SearchRequest searchRequest = SearchRequest
+                .builder()
+                .query(message)
+                .topK(5)
+                .similarityThreshold(similarityThreshold).build();
+        List<Document> documents = vectorStore.similaritySearch(searchRequest);
+        List<Faq> faqs = new ArrayList<>();
+        if (CollectionUtils.isEmpty(documents)) {
+            return faqs;
+        }
+        List<String> ids = documents.stream().map(Document::getId).collect(Collectors.toList());
+        return lambdaQuery().in(Faq::getId, ids).list();
+    }
 
 }

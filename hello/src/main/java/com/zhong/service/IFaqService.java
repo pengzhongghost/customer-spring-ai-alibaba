@@ -2,6 +2,9 @@ package com.zhong.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhong.pojo.Faq;
+import org.springframework.ai.document.Document;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,7 @@ import com.zhong.pojo.Faq;
 public interface IFaqService extends IService<Faq> {
 
     void syncFaqToQdrant();
+
+    List<Faq> similaritySearch(String message);
 
 }
