@@ -56,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
                 Map.of("current_date", LocalDate.now().toString())
         );
         ChatClient.CallResponseSpec response = chatClient.prompt().system(resolvedPrompt).user(userMessage)
-                .functions("productFunctionCall").call();
+                .call();
         return response.content();
     }
 
