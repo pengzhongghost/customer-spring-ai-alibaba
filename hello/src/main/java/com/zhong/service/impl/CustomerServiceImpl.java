@@ -55,7 +55,8 @@ public class CustomerServiceImpl implements CustomerService {
         String resolvedPrompt = promptTemplate.render(
                 Map.of("current_date", LocalDate.now().toString())
         );
-        ChatClient.CallResponseSpec response = chatClient.prompt().system(resolvedPrompt).user(userMessage).call();
+        ChatClient.CallResponseSpec response = chatClient.prompt().system(resolvedPrompt).user(userMessage)
+                .functions("productFunctionCall").call();
         return response.content();
     }
 

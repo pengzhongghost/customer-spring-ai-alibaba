@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhong.mapper.SkuInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zhong.pojo.SkuInfo">
+        <id column="id" property="id" />
+        <result column="category_id" property="categoryId" />
+        <result column="attr_group_id" property="attrGroupId" />
+        <result column="sku_type" property="skuType" />
+        <result column="sku_name" property="skuName" />
+        <result column="img_url" property="imgUrl" />
+        <result column="per_limit" property="perLimit" />
+        <result column="publish_status" property="publishStatus" />
+        <result column="check_status" property="checkStatus" />
+        <result column="is_new_person" property="isNewPerson" />
+        <result column="sort" property="sort" />
+        <result column="sku_code" property="skuCode" />
+        <result column="price" property="price" />
+        <result column="market_price" property="marketPrice" />
+        <result column="stock" property="stock" />
+        <result column="lock_stock" property="lockStock" />
+        <result column="low_stock" property="lowStock" />
+        <result column="sale" property="sale" />
+        <result column="ware_id" property="wareId" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, category_id, attr_group_id, sku_type, sku_name, img_url, per_limit, publish_status, check_status, is_new_person, sort, sku_code, price, market_price, stock, lock_stock, low_stock, sale, ware_id, version, create_time, update_time, is_deleted
+    </sql>
+
+</mapper>
