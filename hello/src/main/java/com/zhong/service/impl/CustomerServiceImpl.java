@@ -1,5 +1,6 @@
 package com.zhong.service.impl;
 
+import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.zhong.pojo.Faq;
 import com.zhong.service.CustomerService;
 import com.zhong.service.IFaqService;
@@ -11,6 +12,7 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,9 +33,19 @@ public class CustomerServiceImpl implements CustomerService {
     @Resource
     private IFaqService faqService;
 
+    @Resource
+    private SensitiveWordBs sensitiveWordBs;
+
     @Override
     public String generateResponse(String userMessage) {
-        //2.先查询知识库
+        if (StringUtils.isEmpty(userMessage)) {
+            return "输入的内容不能为空";
+        }
+        //1.过滤敏感词
+        if (sensitiveWordBs.contains(userMessage)) {
+            return "内容包含敏感词汇，您的问题我暂时无法回答，让我们换个话题再聊把";
+        }
+        //2.先查询知识库尝试FAQ回答
         List<Faq> faqs = faqService.similaritySearch(userMessage);
         if (!CollectionUtils.isEmpty(faqs)) {
             return faqs.get(0).getAnswer();
