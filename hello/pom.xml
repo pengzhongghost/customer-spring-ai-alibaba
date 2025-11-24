@@ -84,6 +84,13 @@
             <version>2.9.2</version>
         </dependency>
 
+<!--        引入qdrant向量数据库-->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-qdrant-store</artifactId>
+            <version>1.0.0-M5</version>
+        </dependency>
+
     </dependencies>
 
     <repositories>

@@ -13,4 +13,6 @@ import com.zhong.pojo.Faq;
  */
 public interface IFaqService extends IService<Faq> {
 
+    void syncFaqToQdrant();
+
 }
