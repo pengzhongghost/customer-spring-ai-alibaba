@@ -20,4 +20,8 @@ public interface IFaqService extends IService<Faq> {
 
     List<Faq> similaritySearch(String message);
 
+//    void syncFaqToEs();
+//
+//    List<Faq> similaritySearchFromEs(String message);
+
 }

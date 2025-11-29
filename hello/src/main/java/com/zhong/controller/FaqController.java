@@ -27,4 +27,9 @@ public class FaqController {
         return faqService.similaritySearch(message);
     }
 
+//    @GetMapping("/syncFaqToEs")
+//    public void syncFaqToEs() {
+//        faqService.syncFaqToEs();
+//    }
+
 }
