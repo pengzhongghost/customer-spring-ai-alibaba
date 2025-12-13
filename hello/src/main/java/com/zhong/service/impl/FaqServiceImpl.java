@@ -54,7 +54,8 @@ public class FaqServiceImpl extends ServiceImpl<FaqMapper, Faq> implements IFaqS
                     "faq_id", faq.getId(),
                     "category_id", faq.getCategoryId(),
                     "question", faq.getQuestion(),
-                    "answer", faq.getAnswer()
+                    "answer", faq.getAnswer(),
+                    "table", "faq"
             );
             //构建document
             //faq的id作为文档id
@@ -70,6 +71,7 @@ public class FaqServiceImpl extends ServiceImpl<FaqMapper, Faq> implements IFaqS
         SearchRequest searchRequest = SearchRequest
                 .builder()
                 .query(message)
+                .filterExpression("table == 'faq'")
                 .topK(5)
                 .similarityThreshold(similarityThreshold).build();
         List<Document> documents = vectorStore.similaritySearch(searchRequest);

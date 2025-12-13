@@ -66,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
                     //对话记忆用户id
                     advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, userId.toString());
                     //对话记忆每次保留多少条数
-                    advisorSpec.param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10);
+                    advisorSpec.param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 5);
                 })
                 .call();
         return response.content();
